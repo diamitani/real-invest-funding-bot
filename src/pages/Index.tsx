@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import ChatContainer from "@/components/ChatContainer";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import LeadCaptureForm from "@/components/LeadCaptureForm";
 
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
+  const [showLearnMore, setShowLearnMore] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen bg-white">
@@ -63,19 +63,22 @@ const Index = () => {
                 icon: <Banknote className="h-12 w-12 text-realinvest-gold" />,
                 title: "Fix & Flip Loans",
                 description: "Up to 100% financing for purchase and rehab. Fast closings in as little as 7 days.",
-                features: ["No minimum credit score", "Interest rates from 9.9%", "Up to 24-month terms", "As-is valuation"]
+                features: ["No minimum credit score", "Interest rates from 9.9%", "Up to 24-month terms", "As-is valuation"],
+                moreInfo: "Our Fix & Flip loans are designed for investors looking to purchase, renovate, and sell properties quickly. We offer flexible terms with up to 100% financing on both the purchase price and renovation costs. With no minimum credit score requirements and interest rates starting at 9.9%, we make it easy for investors to maximize their returns. Our streamlined process allows for closings in as little as 7 days, giving you a competitive edge in fast-moving markets."
               },
               {
                 icon: <Home className="h-12 w-12 text-realinvest-gold" />,
                 title: "Rental Property Loans",
                 description: "Long-term financing for buy-and-hold investors looking to build passive income.",
-                features: ["30-year terms available", "Cash-flow focused underwriting", "Portfolio loans", "Cash-out refinance"]
+                features: ["30-year terms available", "Cash-flow focused underwriting", "Portfolio loans", "Cash-out refinance"],
+                moreInfo: "Our Rental Property Loans are perfect for buy-and-hold investors focusing on building long-term wealth through passive income. We offer 30-year terms with cash-flow focused underwriting that prioritizes the property's income potential over traditional qualification metrics. Our portfolio loans allow you to finance multiple properties under one loan, simplifying your investment strategy. We also provide cash-out refinance options, allowing you to tap into your equity to expand your portfolio or make improvements to existing properties."
               },
               {
                 icon: <Building className="h-12 w-12 text-realinvest-gold" />,
                 title: "Commercial Financing",
                 description: "Funding solutions for multi-unit, mixed-use, and commercial real estate projects.",
-                features: ["Up to 75% LTV", "Flexible terms", "Value-add projects", "Bridge to permanent"]
+                features: ["Up to 75% LTV", "Flexible terms", "Value-add projects", "Bridge to permanent"],
+                moreInfo: "Our Commercial Financing solutions cater to investors focused on multi-unit, mixed-use, and commercial real estate projects. With up to 75% LTV financing available, we help you maximize your investment potential while maintaining manageable leverage. We specialize in value-add projects where your expertise can increase property value and returns. Our bridge-to-permanent financing options provide short-term capital for acquisitions and improvements, with the ability to convert to long-term financing once the property is stabilized, saving you time and refinancing costs."
               }
             ].map((option, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-8 transform transition-all hover:scale-105">
@@ -93,12 +96,33 @@ const Index = () => {
                   ))}
                 </ul>
                 <div className="mt-8 text-center">
-                  <Button 
-                    onClick={() => setShowChat(true)}
-                    className="bg-realinvest-navy hover:bg-opacity-80 text-white"
-                  >
-                    Get Started <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                  {showLearnMore === option.title ? (
+                    <div>
+                      <p className="text-gray-700 text-left mb-4">{option.moreInfo}</p>
+                      <Button 
+                        onClick={() => setShowLearnMore(null)}
+                        className="bg-realinvest-navy hover:bg-opacity-80 text-white"
+                      >
+                        Show Less
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Button 
+                        onClick={() => setShowLearnMore(option.title)}
+                        className="bg-realinvest-navy hover:bg-opacity-80 text-white w-full"
+                      >
+                        Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                      <Button 
+                        onClick={() => setShowChat(true)}
+                        className="border border-realinvest-navy text-realinvest-navy hover:bg-realinvest-navy hover:text-white w-full"
+                        variant="outline"
+                      >
+                        Get Started <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
