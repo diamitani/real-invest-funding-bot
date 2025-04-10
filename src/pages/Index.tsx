@@ -35,7 +35,7 @@ const Index = () => {
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   variant="outline" 
-                  className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg"
+                  className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-bold"
                 >
                   Explore Options <ArrowDown className="ml-2 h-5 w-5" />
                 </Button>
@@ -226,31 +226,31 @@ const Index = () => {
             <div>
               <h3 className="text-xl font-bold mb-4">Real Invest Funding</h3>
               <p className="text-gray-300">
-                Providing real estate investors with the capital they need to succeed since 2015.
+                Providing real estate investors with the capital they need to succeed.
               </p>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">Funding Options</h3>
               <ul className="space-y-2 text-gray-300">
-                <li>Fix & Flip</li>
-                <li>Rental Properties</li>
-                <li>Commercial</li>
-                <li>Ground-Up Construction</li>
+                <li><a href="#funding-options" className="hover:text-realinvest-gold transition-colors">Fix & Flip</a></li>
+                <li><a href="#funding-options" className="hover:text-realinvest-gold transition-colors">Rental Properties</a></li>
+                <li><a href="#funding-options" className="hover:text-realinvest-gold transition-colors">Commercial</a></li>
+                <li><a href="#funding-options" className="hover:text-realinvest-gold transition-colors">Ground-Up Construction</a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">Services</h3>
               <ul className="space-y-2 text-gray-300">
-                <li>CDNA Reports</li>
-                <li>Proof of Funds</li>
-                <li>Debt Stack Reports</li>
-                <li>Off-Market Leads</li>
+                <li><a href="#" onClick={() => setShowChat(true)} className="hover:text-realinvest-gold transition-colors">CDNA Reports</a></li>
+                <li><a href="#" onClick={() => setShowChat(true)} className="hover:text-realinvest-gold transition-colors">Proof of Funds</a></li>
+                <li><a href="#" onClick={() => setShowChat(true)} className="hover:text-realinvest-gold transition-colors">Debt Stack Reports</a></li>
+                <li><a href="#" onClick={() => setShowChat(true)} className="hover:text-realinvest-gold transition-colors">Off-Market Leads</a></li>
               </ul>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">Contact Us</h3>
               <p className="text-gray-300">
-                Email: aattoh@realinvestfunding.com
+                Email: <a href="mailto:aattoh@realinvestfunding.com" className="hover:text-realinvest-gold transition-colors">aattoh@realinvestfunding.com</a>
               </p>
             </div>
           </div>
