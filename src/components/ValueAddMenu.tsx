@@ -48,8 +48,8 @@ const ValueAddMenu = ({ onSelect }: ValueAddMenuProps) => {
 
   return (
     <Card className="w-full border border-realinvest-navy/20 mb-4">
-      <CardHeader className="bg-realinvest-navy text-white rounded-t-lg">
-        <CardTitle className="text-center">Value-Add Services</CardTitle>
+      <CardHeader className="bg-realinvest-navy rounded-t-lg">
+        <CardTitle className="text-center text-white">Value-Add Services</CardTitle>
         <CardDescription className="text-white/80 text-center">
           Want help making better offers?
         </CardDescription>
