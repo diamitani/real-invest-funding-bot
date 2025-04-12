@@ -44,7 +44,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     {
       id: '1',
       role: 'assistant',
-      content: 'Hi there! I\'m here to help with your real estate funding needs. What type of property are you looking to finance?',
+      content: "Hi there! I'm here to help with your real estate funding needs. What type of property are you looking to finance?",
       timestamp: Date.now(),
     },
   ]);
@@ -103,6 +103,20 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
             setShowLeadForm(true);
           }, 1000);
         }
+        
+        // Show value-add menu after lead form is submitted
+        if (!showValueAddMenu && !showLeadForm && messages.length > 6) {
+          setTimeout(() => {
+            setShowValueAddMenu(true);
+          }, 1500);
+        }
+        
+        // Dynamic button options based on conversation context
+        if (message.toLowerCase().includes('loan') || message.toLowerCase().includes('funding')) {
+          setButtonOptions(['Fix & Flip', 'Rental Property', 'New Construction', 'Bridge Loan']);
+        } else if (message.toLowerCase().includes('rate') || message.toLowerCase().includes('interest')) {
+          setButtonOptions(['See Current Rates', 'Get Pre-Qualified', 'Speak to Loan Officer']);
+        }
       }, 1000);
       
     } catch (error) {
@@ -145,6 +159,11 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
         setMessages(prev => [...prev, thankYouMessage]);
         setIsTyping(false);
         setShowLeadForm(false);
+        
+        // Show value add menu after form submission
+        setTimeout(() => {
+          setShowValueAddMenu(true);
+        }, 1500);
       }, 1000);
       
     } catch (error) {
@@ -186,6 +205,39 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       timestamp: Date.now(),
     };
     setMessages(prev => [...prev, serviceMessage]);
+    
+    // Respond to the service selection
+    setIsTyping(true);
+    setTimeout(() => {
+      let responseContent = "";
+      
+      switch(service) {
+        case "CDNA":
+          responseContent = "Great choice! Our CDNA Reports provide comprehensive property valuation data to help you make better investment decisions. Our team will follow up with details on accessing this service.";
+          break;
+        case "ProofOfFunds":
+          responseContent = "Excellent! Our Proof of Funds letters will give you the credibility you need when making offers. We'll reach out shortly with information on how to obtain your letter.";
+          break;
+        case "Leads":
+          responseContent = "Smart decision! Our AI-scanned off-market leads service will help you find high-equity deals with less competition. A member of our team will contact you to discuss your specific investment criteria.";
+          break;
+        case "DSR":
+          responseContent = "Perfect! Our Debt Stack Reports reveal hidden financial information that can give you powerful negotiation leverage. We'll be in touch soon with more details about this service.";
+          break;
+        default:
+          responseContent = "Thanks for your interest. Our team will be in touch shortly to discuss how we can help with your investment needs.";
+      }
+      
+      const botResponse: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: responseContent,
+        timestamp: Date.now(),
+      };
+      
+      setMessages(prev => [...prev, botResponse]);
+      setIsTyping(false);
+    }, 1000);
   };
 
   return (

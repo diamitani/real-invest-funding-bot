@@ -45,12 +45,29 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(emailContent);
     
     // In a real implementation, we would connect to an email service here
-    // For now, we're just logging and returning success
+    // For now, we're just logging and returning intelligent responses
+    
+    // Create context-aware responses based on message content
+    let response = "Thanks for your message! Our team will get back to you shortly. What specific type of property are you interested in financing?";
+    
+    if (message.toLowerCase().includes("single family")) {
+      response = "Single-family homes are a great investment! We offer fix & flip loans with up to 100% financing for purchase and rehab. What's your timeline for this project?";
+    } else if (message.toLowerCase().includes("multi-family")) {
+      response = "Multi-family properties can provide excellent returns! Our rental property loans feature 30-year terms with cash-flow focused underwriting. How many units are you looking at?";
+    } else if (message.toLowerCase().includes("commercial")) {
+      response = "For commercial properties, we offer financing up to 75% LTV with flexible terms for value-add projects. What type of commercial property are you interested in?";
+    } else if (message.toLowerCase().includes("land")) {
+      response = "Land development can be very profitable. We provide ground-up construction financing for qualified investors with competitive terms. Do you already own the land or are you looking to purchase?";
+    } else if (message.toLowerCase().includes("rate") || message.toLowerCase().includes("interest")) {
+      response = "Our rates start at 9.9% for fix & flip loans and vary based on property type, loan amount, and your experience. Would you like us to send you our current rate sheet?";
+    } else if (message.toLowerCase().includes("down payment") || message.toLowerCase().includes("qualify")) {
+      response = "We can finance up to 100% of the purchase and renovation costs for the right deals! Our qualification process focuses more on the property's potential than traditional borrower metrics. What's your investment experience?";
+    }
     
     return new Response(
       JSON.stringify({ 
         success: true, 
-        response: "Thanks for your message! Our team will get back to you shortly. What specific type of property are you interested in financing?" 
+        response: response 
       }),
       {
         status: 200,
