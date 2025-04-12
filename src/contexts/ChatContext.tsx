@@ -116,6 +116,8 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
           setButtonOptions(['Fix & Flip', 'Rental Property', 'New Construction', 'Bridge Loan']);
         } else if (message.toLowerCase().includes('rate') || message.toLowerCase().includes('interest')) {
           setButtonOptions(['See Current Rates', 'Get Pre-Qualified', 'Speak to Loan Officer']);
+        } else if (message.toLowerCase().includes('service') || message.toLowerCase().includes('help')) {
+          setButtonOptions(['CDNA Report', 'DSR Report', 'Proof of Funds', 'Off-Market Leads']);
         }
       }, 1000);
       
@@ -213,19 +215,19 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
       
       switch(service) {
         case "CDNA":
-          responseContent = "Great choice! Our CDNA Reports provide comprehensive property valuation data to help you make better investment decisions. Our team will follow up with details on accessing this service.";
+          responseContent = "Great choice! Our CDNA Reports provide comprehensive property valuation data at just $34.97. This detailed analysis is nearly as thorough as a professional appraisal but at a fraction of the cost. Our team will follow up with details on accessing this service.";
           break;
         case "ProofOfFunds":
-          responseContent = "Excellent! Our Proof of Funds letters will give you the credibility you need when making offers. We'll reach out shortly with information on how to obtain your letter.";
+          responseContent = "Excellent! Our Proof of Funds letters cost only $19.97 and will give you the credibility you need when making offers. These letters are available nationwide except in AZ, MN, NV, OR, SD, UT, and VT. We'll reach out shortly with information on how to obtain your letter.";
           break;
         case "Leads":
-          responseContent = "Smart decision! Our AI-scanned off-market leads service will help you find high-equity deals with less competition. A member of our team will contact you to discuss your specific investment criteria.";
+          responseContent = "Smart decision! Our AI-scanned off-market leads service helps you find high-equity deals with absentee owners and properties showing distress signals. These exclusive opportunities come with much less competition than on-market listings. A member of our team will contact you to discuss your specific investment criteria.";
           break;
         case "DSR":
-          responseContent = "Perfect! Our Debt Stack Reports reveal hidden financial information that can give you powerful negotiation leverage. We'll be in touch soon with more details about this service.";
+          responseContent = "Perfect! Our Debt Stack Reports reveal essential financial information including primary mortgages, secondary liens, and tax obligations that can give you powerful negotiation leverage. This critical due diligence tool helps you make well-informed offers. We'll be in touch soon with more details about this service.";
           break;
         default:
-          responseContent = "Thanks for your interest. Our team will be in touch shortly to discuss how we can help with your investment needs.";
+          responseContent = "Thanks for your interest. Our team will be in touch shortly to discuss how we can help with your investment needs. Is there anything specific about our services that you'd like to learn more about in the meantime?";
       }
       
       const botResponse: Message = {
