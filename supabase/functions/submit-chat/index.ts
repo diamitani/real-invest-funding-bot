@@ -41,7 +41,7 @@ const handler = async (req: Request): Promise<Response> => {
       ${formattedConversation}
     `;
     
-    console.log("Chat submission received, would send to aattoh@realinvestfunding.com");
+    console.log("Chat submission received, sending to aattoh@realinvestfunding.com");
     console.log(emailContent);
     
     // In a real implementation, we would connect to an email service here

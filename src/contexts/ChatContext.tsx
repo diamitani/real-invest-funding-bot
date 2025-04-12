@@ -39,7 +39,7 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     {
       id: '1',
       role: 'assistant',
-      content: 'Hi there! I'm here to help with your real estate funding needs. What type of property are you looking to finance?',
+      content: 'Hi there! I\'m here to help with your real estate funding needs. What type of property are you looking to finance?',
       timestamp: Date.now(),
     },
   ]);
