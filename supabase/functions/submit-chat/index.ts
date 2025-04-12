@@ -62,6 +62,14 @@ const handler = async (req: Request): Promise<Response> => {
       response = "Our rates start at 9.9% for fix & flip loans and vary based on property type, loan amount, and your experience. Would you like us to send you our current rate sheet?";
     } else if (message.toLowerCase().includes("down payment") || message.toLowerCase().includes("qualify")) {
       response = "We can finance up to 100% of the purchase and renovation costs for the right deals! Our qualification process focuses more on the property's potential than traditional borrower metrics. What's your investment experience?";
+    } else if (message.toLowerCase().includes("fix & flip")) {
+      response = "Our fix & flip loans are designed for short-term projects with terms up to 24 months. We can fund up to 100% of purchase and rehab costs for the right deals. What's the purchase price and estimated renovation budget for your project?";
+    } else if (message.toLowerCase().includes("rental property")) {
+      response = "Our rental property loans offer 30-year terms with cash-flow focused underwriting. We look at the property's income potential rather than just your personal finances. What's the expected monthly rent for the property you're considering?";
+    } else if (message.toLowerCase().includes("new construction")) {
+      response = "We provide ground-up construction financing with competitive terms. We can fund up to 80% of total project costs including land acquisition. Do you have architectural plans and permits in place?";
+    } else if (message.toLowerCase().includes("bridge loan")) {
+      response = "Our bridge loans provide short-term financing for acquisitions and refinances with flexible terms. They're perfect for when you need capital quickly before securing long-term financing. What's your exit strategy for the bridge loan?";
     }
     
     return new Response(
