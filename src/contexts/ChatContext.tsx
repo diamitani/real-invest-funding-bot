@@ -14,8 +14,13 @@ interface ChatContextType {
   messages: Message[];
   isTyping: boolean;
   showLeadForm: boolean;
+  buttonOptions: string[];
+  showValueAddMenu: boolean;
   handleSendMessage: (message: string) => Promise<void>;
   handleFormSubmit: (formData: any) => Promise<void>;
+  handleButtonSelect: (option: string) => void;
+  handleLeadFormSubmit: (formData: any) => void;
+  handleValueAddSelection: (service: string) => void;
   selectedValueAddService: string | null;
   setSelectedValueAddService: React.Dispatch<React.SetStateAction<string | null>>;
 }
@@ -45,6 +50,13 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [showLeadForm, setShowLeadForm] = useState(false);
+  const [buttonOptions, setButtonOptions] = useState<string[]>([
+    'Single Family', 
+    'Multi-Family', 
+    'Commercial', 
+    'Land'
+  ]);
+  const [showValueAddMenu, setShowValueAddMenu] = useState(false);
   const [selectedValueAddService, setSelectedValueAddService] = useState<string | null>(null);
 
   const handleSendMessage = async (message: string) => {
@@ -153,14 +165,42 @@ export const ChatProvider = ({ children }: ChatProviderProps) => {
     }
   };
 
+  // New handlers needed by ChatMessagesArea
+  const handleButtonSelect = (option: string) => {
+    handleSendMessage(option);
+    setButtonOptions([]);
+  };
+
+  const handleLeadFormSubmit = (formData: any) => {
+    handleFormSubmit(formData);
+  };
+
+  const handleValueAddSelection = (service: string) => {
+    setSelectedValueAddService(service);
+    setShowValueAddMenu(false);
+    // Add a message about the selected service
+    const serviceMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: `I'm interested in ${service}`,
+      timestamp: Date.now(),
+    };
+    setMessages(prev => [...prev, serviceMessage]);
+  };
+
   return (
     <ChatContext.Provider
       value={{
         messages,
         isTyping,
         showLeadForm,
+        buttonOptions,
+        showValueAddMenu,
         handleSendMessage,
         handleFormSubmit,
+        handleButtonSelect,
+        handleLeadFormSubmit,
+        handleValueAddSelection,
         selectedValueAddService,
         setSelectedValueAddService,
       }}

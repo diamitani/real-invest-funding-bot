@@ -30,8 +30,8 @@ const ChatMessagesArea = () => {
       {messages.map((message, index) => (
         <ChatMessage 
           key={index} 
-          message={message.text} 
-          isUser={message.isUser} 
+          message={message.content} 
+          isUser={message.role === 'user'} 
         />
       ))}
       
