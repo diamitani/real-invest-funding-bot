@@ -50,7 +50,7 @@ const ValueAddMenu = ({ onSelect }: ValueAddMenuProps) => {
     <Card className="w-full border border-realinvest-navy/20 mb-4">
       <CardHeader className="bg-realinvest-navy rounded-t-lg">
         <CardTitle className="text-center text-white">Value-Add Services</CardTitle>
-        <CardDescription className="text-white/80 text-center">
+        <CardDescription className="text-white/90 text-center font-medium">
           Want help making better offers?
         </CardDescription>
       </CardHeader>

@@ -35,7 +35,7 @@ const Index = () => {
                     element?.scrollIntoView({ behavior: 'smooth' });
                   }}
                   variant="outline" 
-                  className="border-white text-white hover:bg-white/10 px-8 py-6 text-lg font-bold"
+                  className="border-white text-white hover:bg-white hover:text-realinvest-navy px-8 py-6 text-lg font-bold"
                 >
                   Explore Options <ArrowDown className="ml-2 h-5 w-5" />
                 </Button>
@@ -181,44 +181,6 @@ const Index = () => {
                 >
                   Learn More
                 </Button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center text-realinvest-navy mb-12">
-            What Our <span className="text-realinvest-gold">Investors Say</span>
-          </h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                quote: "Real Invest Funding helped me close my first fix and flip deal in just 9 days. Their team was responsive and made the process seamless.",
-                name: "Michael T.",
-                role: "Fix & Flip Investor"
-              },
-              {
-                quote: "I've been searching for a lender who understands creative financing. Their team found solutions when traditional banks said no.",
-                name: "Sarah K.",
-                role: "Rental Portfolio Owner"
-              },
-              {
-                quote: "The CDNA reports have been a game changer for my acquisition strategy. I now make offers with complete confidence in my numbers.",
-                name: "David R.",
-                role: "Commercial Investor"
-              }
-            ].map((testimonial, index) => (
-              <div key={index} className="bg-white p-8 rounded-lg shadow-md relative">
-                <div className="text-5xl text-realinvest-gold absolute top-4 left-4 opacity-20">"</div>
-                <p className="text-gray-600 mb-6 relative z-10">"{testimonial.quote}"</p>
-                <div>
-                  <p className="font-bold text-realinvest-navy">{testimonial.name}</p>
-                  <p className="text-sm text-gray-500">{testimonial.role}</p>
-                </div>
               </div>
             ))}
           </div>
