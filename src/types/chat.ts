@@ -14,4 +14,10 @@ export interface ChatFormData {
   email: string;
   phone: string;
   dealType?: string;
+  businessName?: string;
+  investmentGoals?: string;
+  propertyType?: string;
+  targetLocation?: string;
+  timeframe?: string;
+  serviceRequested?: string;
 }

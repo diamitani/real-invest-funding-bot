@@ -1,3 +1,4 @@
+
 import { supabase } from '@/integrations/supabase/client';
 import { Message, ChatFormData } from '@/types/chat';
 
@@ -22,6 +23,8 @@ export const useChatHandlers = ({
   setIsTyping,
   showLeadForm,
   setShowLeadForm,
+  buttonOptions,
+  setButtonOptions,
   showValueAddMenu,
   setShowValueAddMenu,
   setSelectedValueAddService,
@@ -66,14 +69,14 @@ export const useChatHandlers = ({
         setIsTyping(false);
         
         // Show lead form after a few messages
-        if (messages.length >= 4 && !showLeadForm) {
+        if (messages.length >= 3 && !showLeadForm) {
           setTimeout(() => {
             setShowLeadForm(true);
           }, 1000);
         }
         
         // Show value-add menu after lead form is submitted
-        if (!showValueAddMenu && !showLeadForm && messages.length > 6) {
+        if (!showValueAddMenu && !showLeadForm && messages.length > 5) {
           setTimeout(() => {
             setShowValueAddMenu(true);
           }, 1500);
@@ -86,6 +89,8 @@ export const useChatHandlers = ({
           setButtonOptions(['See Current Rates', 'Get Pre-Qualified', 'Speak to Loan Officer']);
         } else if (message.toLowerCase().includes('service') || message.toLowerCase().includes('help')) {
           setButtonOptions(['CDNA Report', 'DSR Report', 'Proof of Funds', 'Off-Market Leads']);
+        } else if (message.toLowerCase().includes('get started') || message.toLowerCase().includes('start')) {
+          setButtonOptions(['CDNA Report', 'DSR Report', 'Proof of Funds', 'Off-Market Leads', 'Loan Options']);
         }
       }, 1000);
       
@@ -122,7 +127,7 @@ export const useChatHandlers = ({
         const thankYouMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
-          content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your ${formData.loanAmount} loan request for ${formData.propertyAddress}.`,
+          content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your ${formData.loanAmount} loan request for ${formData.propertyAddress}. Would you like to learn about our value-added services?`,
           timestamp: Date.now(),
         };
         
@@ -183,19 +188,35 @@ export const useChatHandlers = ({
       
       switch(service) {
         case "CDNA":
-          responseContent = "Great choice! Our CDNA Reports provide comprehensive property valuation data at just $34.97. This detailed analysis is nearly as thorough as a professional appraisal but at a fraction of the cost. Our team will follow up with details on accessing this service.";
+          responseContent = "Great choice! Our CDNA Reports provide comprehensive property valuation data at just $34.97. This detailed analysis is nearly as thorough as a professional appraisal but at a fraction of the cost. Please provide your property address and contact information so our team can follow up with details on accessing this service.";
           break;
         case "ProofOfFunds":
-          responseContent = "Excellent! Our Proof of Funds letters cost only $19.97 and will give you the credibility you need when making offers. These letters are available nationwide except in AZ, MN, NV, OR, SD, UT, and VT. We'll reach out shortly with information on how to obtain your letter.";
+          responseContent = "Excellent! Our Proof of Funds letters cost only $19.97 and will give you the credibility you need when making offers. To proceed, we need your business/entity name, the investment property's full address, and the expected loan amount. Please provide this information so we can prepare your letter.";
           break;
         case "Leads":
-          responseContent = "Smart decision! Our AI-scanned off-market leads service helps you find high-equity deals with absentee owners and properties showing distress signals. These exclusive opportunities come with much less competition than on-market listings. A member of our team will contact you to discuss your specific investment criteria.";
+          responseContent = "Smart decision! Our AI-scanned off-market leads service helps you find high-equity deals with absentee owners and properties showing distress signals. To customize your leads list, please share your target location, property type preferences, and budget range so we can prepare the most relevant opportunities for you.";
           break;
         case "DSR":
-          responseContent = "Perfect! Our Debt Stack Reports reveal essential financial information including primary mortgages, secondary liens, and tax obligations that can give you powerful negotiation leverage. This critical due diligence tool helps you make well-informed offers. We'll be in touch soon with more details about this service.";
+          responseContent = "Perfect! Our Debt Stack Reports reveal essential financial information including primary mortgages, secondary liens, and tax obligations that can give you powerful negotiation leverage. To generate your report, we need the property address and your contact details. Please provide this information to proceed.";
+          break;
+        case "Loan Options":
+          responseContent = "We offer competitive funding options for your real estate investments! To provide you with a personalized term sheet, we need some details about your project. Please complete the form that will appear shortly with your contact information and property details.";
+          setTimeout(() => {
+            setShowLeadForm(true);
+          }, 1500);
+          break;
+        case "None":
+          responseContent = "Thanks for chatting with us! Is there anything else we can help you with regarding real estate investment funding? Remember, we offer Fix & Flip loans, Rental Property loans, New Construction financing, and Bridge loans.";
+          // Show loan options buttons
+          setTimeout(() => {
+            setButtonOptions(['Fix & Flip', 'Rental Property', 'New Construction', 'Bridge Loan']);
+          }, 500);
           break;
         default:
-          responseContent = "Thanks for your interest. Our team will be in touch shortly to discuss how we can help with your investment needs. Is there anything specific about our services that you'd like to learn more about in the meantime?";
+          responseContent = "Thanks for your interest. Our team will be in touch shortly to discuss how we can help with your investment needs. Please provide your contact information in the form below so we can reach out with more details.";
+          setTimeout(() => {
+            setShowLeadForm(true);
+          }, 1500);
       }
       
       const botResponse: Message = {

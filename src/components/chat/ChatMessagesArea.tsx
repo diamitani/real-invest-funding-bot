@@ -15,7 +15,8 @@ const ChatMessagesArea = () => {
     showValueAddMenu, 
     handleButtonSelect, 
     handleLeadFormSubmit, 
-    handleValueAddSelection 
+    handleValueAddSelection,
+    selectedValueAddService
   } = useChatContext();
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -29,7 +30,7 @@ const ChatMessagesArea = () => {
     <div className="max-h-[500px] overflow-y-auto mb-4">
       {messages.map((message, index) => (
         <ChatMessage 
-          key={index} 
+          key={message.id} 
           message={message.content} 
           isUser={message.role === 'user'} 
         />
@@ -52,7 +53,10 @@ const ChatMessagesArea = () => {
       )}
       
       {showLeadForm && (
-        <LeadCaptureForm onSubmit={handleLeadFormSubmit} />
+        <LeadCaptureForm 
+          onSubmit={handleLeadFormSubmit} 
+          serviceType={selectedValueAddService || undefined}
+        />
       )}
       
       {showValueAddMenu && (
