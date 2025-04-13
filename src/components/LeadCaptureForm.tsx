@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,23 +6,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, CheckCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-
-interface LeadFormData {
-  fullName: string;
-  propertyAddress: string;
-  loanAmount: string;
-  email: string;
-  phone: string;
-  dealType?: string;
-}
+import { ChatFormData } from "@/types/chat";
 
 interface LeadCaptureFormProps {
-  onSubmit: (data: LeadFormData) => void;
+  onSubmit: (data: ChatFormData) => void;
   dealType?: string;
 }
 
 const LeadCaptureForm = ({ onSubmit, dealType }: LeadCaptureFormProps) => {
-  const [formData, setFormData] = useState<LeadFormData>({
+  const [formData, setFormData] = useState<ChatFormData>({
     fullName: "",
     propertyAddress: "",
     loanAmount: "",
@@ -44,14 +35,12 @@ const LeadCaptureForm = ({ onSubmit, dealType }: LeadCaptureFormProps) => {
     setIsSubmitting(true);
     
     try {
-      // Submit to Supabase edge function
       const { data, error } = await supabase.functions.invoke("submit-lead", {
         body: formData,
       });
       
       if (error) throw new Error(error.message);
       
-      // Show success state
       setIsSuccess(true);
       toast({
         title: "Application Submitted!",
@@ -59,7 +48,6 @@ const LeadCaptureForm = ({ onSubmit, dealType }: LeadCaptureFormProps) => {
         duration: 5000,
       });
       
-      // Pass the data to the parent component
       onSubmit(formData);
     } catch (error) {
       console.error("Error submitting form:", error);
