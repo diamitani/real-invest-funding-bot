@@ -1,4 +1,3 @@
-
 import { supabase } from '@/integrations/supabase/client';
 import { Message, ChatFormData } from '@/types/chat';
 
@@ -21,8 +20,9 @@ export const useChatHandlers = ({
   messages,
   setMessages,
   setIsTyping,
+  showLeadForm,
   setShowLeadForm,
-  setButtonOptions,
+  showValueAddMenu,
   setShowValueAddMenu,
   setSelectedValueAddService,
 }: ChatStateProps) => {
