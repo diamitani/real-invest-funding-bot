@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, FileText, Key, PieChart, Search } from "lucide-react";
+import { FileText, Key, PieChart, Search, DollarSign } from "lucide-react";
 import { useState } from "react";
 
 interface ValueAddMenuProps {
@@ -44,6 +44,14 @@ const ValueAddMenu = ({ onSelect }: ValueAddMenuProps) => {
       icon: <FileText className="h-5 w-5 text-realinvest-gold" />,
       details: "Debt Stack Reports reveal hidden financial encumbrances on properties, including tax liens, second mortgages, and other claims that may not appear in standard title searches. This intelligence gives you powerful negotiation leverage and helps you avoid deals with complicated title issues."
     },
+    {
+      id: "Loan Options",
+      title: "Loan Options",
+      price: "Varies",
+      description: "Up to 100% financing",
+      icon: <DollarSign className="h-5 w-5 text-realinvest-gold" />,
+      details: "We offer flexible financing solutions for fix & flip projects, rental properties, commercial investments, and ground-up construction. With competitive rates and terms tailored to your investment goals, we can fund up to 100% of costs for the right deals."
+    }
   ];
 
   return (
@@ -89,7 +97,7 @@ const ValueAddMenu = ({ onSelect }: ValueAddMenuProps) => {
           className="h-24 flex flex-col items-center justify-center text-left border-2 border-realinvest-navy/20 hover:border-realinvest-navy hover:bg-realinvest-navy/10 md:col-span-2"
           onClick={() => onSelect("None")}
         >
-          <BookOpen className="h-5 w-5 text-realinvest-navy mb-1" />
+          <FileText className="h-5 w-5 text-realinvest-navy mb-1" />
           <span className="font-bold">I'm Good For Now</span>
           <span className="text-sm text-muted-foreground">Continue without additional services</span>
         </Button>

@@ -7,17 +7,15 @@ export const useChatState = () => {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi there! I'm here to help with your real estate funding needs. What type of property are you looking to finance?",
+      content: "Welcome to Real Invest Funding LLC! 💰 Ready to fund your next real estate deal with up to 100% financing? I'll guide you through our quick process — just a few questions, and we'll send you info or a term sheet. Ready to get started?",
       timestamp: Date.now(),
     },
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [buttonOptions, setButtonOptions] = useState<string[]>([
-    'Single Family', 
-    'Multi-Family', 
-    'Commercial', 
-    'Land'
+    'Yes, Tell Me More', 
+    'Browse Options'
   ]);
   const [showValueAddMenu, setShowValueAddMenu] = useState(false);
   const [selectedValueAddService, setSelectedValueAddService] = useState<string | null>(null);

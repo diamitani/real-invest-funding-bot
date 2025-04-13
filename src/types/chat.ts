@@ -20,4 +20,7 @@ export interface ChatFormData {
   targetLocation?: string;
   timeframe?: string;
   serviceRequested?: string;
+  referralName?: string;
+  referralEmail?: string;
+  referralPhone?: string;
 }

@@ -56,41 +56,142 @@ export const useChatHandlers = ({
       
       if (error) throw error;
       
-      // Add assistant response
+      // Handle specific conversation paths based on user input
       setTimeout(() => {
-        const botResponse: Message = {
+        let botResponse = data.response;
+        let newButtons: string[] = [];
+        
+        // Initial flow options
+        if (message === "Yes, Tell Me More") {
+          botResponse = "Great! To get started, what kind of funding do you need right now?";
+          newButtons = ["Fix & Flip", "Rental Property", "Commercial", "Ground-Up Construction", "Proof of Funds", "I'm Not Sure Yet"];
+        }
+        else if (message === "Browse Options") {
+          botResponse = "Here are the services we offer at Real Invest Funding LLC:\n\n" +
+            "💵 Private Money Lending - Up to 100% financing for real estate deals\n" +
+            "📄 CDNA Reports - Comprehensive property valuation for $34.97\n" +
+            "🏛️ DSR Reports - Debt and lien reports to help with negotiations\n" +
+            "🧾 Proof of Funds - Letters for $19.97 to strengthen your offers\n" +
+            "🏠 Off-Market Leads - AI-curated investment opportunities\n\n" +
+            "What kind of funding are you interested in?";
+          newButtons = ["Fix & Flip", "Rental Property", "Commercial", "Ground-Up Construction", "Proof of Funds", "Other Services"];
+        }
+
+        // Deal type selection flow
+        else if (message === "Fix & Flip") {
+          botResponse = "Awesome — we love fix and flips. 🛠️ We can offer up to 100% financing if the numbers make sense. No credit minimums required. We fund \"as-is\" and fast.\n\nWould you like to:";
+          newButtons = ["See Loan Terms", "Start Application", "Learn About CDNA Reports"];
+        }
+        else if (message === "Rental Property") {
+          botResponse = "Smart choice! Our rental loans feature 30-year terms with cash-flow focused underwriting. We care more about the property's income potential than your personal finances.\n\nWould you like to:";
+          newButtons = ["See Loan Terms", "Start Application", "Learn About DSR Reports"];
+        }
+        else if (message === "Commercial") {
+          botResponse = "We offer commercial financing for qualified investors! Our terms are competitive with up to 75% LTV and flexible options for various commercial property types.\n\nWould you like to:";
+          newButtons = ["See Loan Terms", "Start Application", "Speak With a Specialist"];
+        }
+        else if (message === "Ground-Up Construction") {
+          botResponse = "Ground-up construction requires careful planning. We provide financing for qualified investors with competitive terms and can fund up to 80% of total project costs including land acquisition.\n\nWould you like to:";
+          newButtons = ["See Loan Terms", "Start Application", "Learn More"];
+        }
+        else if (message === "Proof of Funds") {
+          botResponse = "Our Proof of Funds letters cost just $19.97 and are available nationwide (except AZ, MN, NV, OR, SD, UT, VT). These letters give you credibility when making offers.\n\nTo proceed, we'll need:\n- Business/Entity Name (funding not available for individuals)\n- Investment Property Address\n- Expected Loan Amount";
+          newButtons = ["Start Application", "Learn More", "See Other Services"];
+          setSelectedValueAddService("ProofOfFunds");
+        }
+        else if (message === "I'm Not Sure Yet") {
+          botResponse = "No problem! Let me help you figure out what might work best for your situation. What type of real estate investment are you considering?";
+          newButtons = ["Buying to Renovate", "Buying to Rent", "Commercial Property", "Raw Land", "Just Exploring"];
+        }
+
+        // Secondary options flow
+        else if (message === "See Loan Terms") {
+          botResponse = "Here are our current loan terms:\n\n" +
+            "• Loan amounts from $30,000 up to the FHA county limit\n" +
+            "• Interest rates starting at 7.5% (annualized)\n" +
+            "• Origination fees: 0-5%\n" +
+            "• No prepayment penalties\n" +
+            "• Fix & Flip terms: 6-24 months\n" +
+            "• Buy & Hold terms: up to 30 years\n\n" +
+            "Ready to get started with an application?";
+          newButtons = ["Start Application", "Ask a Question", "Not Right Now"];
+        }
+        else if (message === "Start Application" || message === "Learn About CDNA Reports" || message === "Learn About DSR Reports") {
+          botResponse = "Great! Let's get your information so we can prepare your funding options. Please fill out the form below:";
+          newButtons = [];
+          
+          // Select appropriate service based on previous selection
+          if (message === "Learn About CDNA Reports") {
+            setSelectedValueAddService("CDNA");
+          } else if (message === "Learn About DSR Reports") {
+            setSelectedValueAddService("DSR");
+          }
+          
+          // Show lead form
+          setShowLeadForm(true);
+        }
+        else if (message === "Learn More" || message === "See Other Services" || message === "Other Services") {
+          botResponse = "We offer several value-added services to help real estate investors make better decisions:\n\n" +
+            "• CDNA Reports ($34.97): Comprehensive property valuations\n" +
+            "• DSR Reports: Details on property debts and liens\n" +
+            "• Proof of Funds ($19.97): Letters to strengthen your offers\n" +
+            "• Off-Market Leads: AI-curated investment opportunities\n\n" +
+            "Which service would you like to learn more about?";
+          newButtons = ["CDNA Reports", "DSR Reports", "Proof of Funds", "Off-Market Leads", "Back to Funding"];
+        }
+        else if (message === "Speak With a Specialist" || message === "connect me" || message.toLowerCase().includes("speak") || message.toLowerCase().includes("human") || message.toLowerCase().includes("agent")) {
+          botResponse = "I'd be happy to connect you with a funding specialist! Please fill out the form below, and someone will reach out to you within 24 business hours.";
+          newButtons = [];
+          setShowLeadForm(true);
+        }
+
+        // Value-add services flow
+        else if (message === "CDNA Reports") {
+          botResponse = "Our CDNA (Comprehensive Digital Neighborhood Analysis) Reports provide in-depth property valuations for just $34.97. These reports include neighborhood trends, historical price data, and comprehensive comparables to help you make informed investment decisions.\n\nWould you like to order a CDNA Report?";
+          newButtons = ["Yes, Order CDNA", "No Thanks"];
+          setSelectedValueAddService("CDNA");
+        }
+        else if (message === "DSR Reports") {
+          botResponse = "Our DSR (Debt Stack Report) reveals crucial financial information about properties including the primary mortgage holder, outstanding balances, secondary mortgages, tax liens, and other encumbrances. This gives you powerful negotiation leverage.\n\nWould you like to order a DSR Report?";
+          newButtons = ["Yes, Order DSR", "No Thanks"];
+          setSelectedValueAddService("DSR");
+        }
+        else if (message === "Off-Market Leads") {
+          botResponse = "Our Off-Market Leads service uses AI technology to identify high-equity properties with motivated sellers before they hit the market. This gives you a competitive edge with less competition and better potential deals.\n\nWould you like to learn more about our leads service?";
+          newButtons = ["Yes, Get Leads Info", "No Thanks"];
+          setSelectedValueAddService("Leads");
+        }
+        else if (message === "Yes, Order CDNA" || message === "Yes, Order DSR" || message === "Yes, Get Leads Info") {
+          botResponse = "Great choice! To proceed with your order, please fill out the form below:";
+          newButtons = [];
+          setShowLeadForm(true);
+        }
+        else if (message === "No Thanks") {
+          botResponse = "No problem! Is there something else I can help you with regarding real estate investment funding?";
+          newButtons = ["Fix & Flip", "Rental Property", "Commercial", "Ground-Up Construction", "Proof of Funds", "Other Services"];
+        }
+
+        // Add assistant response
+        const botResponseMsg: Message = {
           id: (Date.now() + 1).toString(),
           role: 'assistant',
-          content: data.response || "I'm sorry, I couldn't process that request. Please try again.",
+          content: botResponse,
           timestamp: Date.now(),
         };
         
-        setMessages(prev => [...prev, botResponse]);
+        setMessages(prev => [...prev, botResponseMsg]);
         setIsTyping(false);
         
-        // Show lead form after a few messages
-        if (messages.length >= 3 && !showLeadForm) {
-          setTimeout(() => {
-            setShowLeadForm(true);
-          }, 1000);
+        // Update button options
+        if (newButtons.length > 0) {
+          setButtonOptions(newButtons);
         }
         
         // Show value-add menu after lead form is submitted
-        if (!showValueAddMenu && !showLeadForm && messages.length > 5) {
+        if (!showValueAddMenu && !showLeadForm && messages.length > 5 && !message.toLowerCase().includes("no thanks")) {
           setTimeout(() => {
             setShowValueAddMenu(true);
           }, 1500);
-        }
-        
-        // Dynamic button options based on conversation context
-        if (message.toLowerCase().includes('loan') || message.toLowerCase().includes('funding')) {
-          setButtonOptions(['Fix & Flip', 'Rental Property', 'New Construction', 'Bridge Loan']);
-        } else if (message.toLowerCase().includes('rate') || message.toLowerCase().includes('interest')) {
-          setButtonOptions(['See Current Rates', 'Get Pre-Qualified', 'Speak to Loan Officer']);
-        } else if (message.toLowerCase().includes('service') || message.toLowerCase().includes('help')) {
-          setButtonOptions(['CDNA Report', 'DSR Report', 'Proof of Funds', 'Off-Market Leads']);
-        } else if (message.toLowerCase().includes('get started') || message.toLowerCase().includes('start')) {
-          setButtonOptions(['CDNA Report', 'DSR Report', 'Proof of Funds', 'Off-Market Leads', 'Loan Options']);
         }
       }, 1000);
       
@@ -124,12 +225,60 @@ export const useChatHandlers = ({
       
       // Add success message
       setTimeout(() => {
-        const thankYouMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your ${formData.loanAmount} loan request for ${formData.propertyAddress}. Would you like to learn about our value-added services?`,
-          timestamp: Date.now(),
-        };
+        let thankYouMessage: Message;
+        
+        if (formData.serviceRequested) {
+          // Service-specific thank you message
+          switch(formData.serviceRequested) {
+            case "CDNA":
+              thankYouMessage = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: `Thanks ${formData.fullName}! We've received your CDNA Report request for ${formData.propertyAddress || "your property"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps.`,
+                timestamp: Date.now(),
+              };
+              break;
+            case "DSR":
+              thankYouMessage = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: `Thanks ${formData.fullName}! We've received your DSR Report request for ${formData.propertyAddress || "your property"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps.`,
+                timestamp: Date.now(),
+              };
+              break;
+            case "ProofOfFunds":
+              thankYouMessage = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: `Thanks ${formData.fullName}! We've received your Proof of Funds request for ${formData.businessName || "your business"} regarding ${formData.propertyAddress || "your property"} with an expected loan amount of ${formData.loanAmount || "$0"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps.`,
+                timestamp: Date.now(),
+              };
+              break;
+            case "Leads":
+              thankYouMessage = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: `Thanks ${formData.fullName}! We've received your Off-Market Leads request for ${formData.targetLocation || "your target location"}. Our team will reach out to you at ${formData.email} within 24 business hours to discuss available lead options in your area.`,
+                timestamp: Date.now(),
+              };
+              break;
+            default:
+              thankYouMessage = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your request for ${formData.serviceRequested}.`,
+                timestamp: Date.now(),
+              };
+          }
+        } else {
+          // Standard funding thank you message
+          thankYouMessage = {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your ${formData.loanAmount || ""} loan request for ${formData.propertyAddress || "your property"}. Would you like to learn about our value-added services that can help strengthen your real estate deals?`,
+            timestamp: Date.now(),
+          };
+        }
         
         setMessages(prev => [...prev, thankYouMessage]);
         setIsTyping(false);
@@ -137,8 +286,27 @@ export const useChatHandlers = ({
         
         // Show value add menu after form submission
         setTimeout(() => {
-          setShowValueAddMenu(true);
-        }, 1500);
+          const referralMessage: Message = {
+            id: (Date.now() + 2).toString(),
+            role: 'assistant',
+            content: "✅ We've received your info and will reach out within 24 business hours with your term sheet or details. Keep an eye on your inbox!\n\nWant to refer a friend and earn a bonus? 💸 Just let us know and we can tell you about our referral program!",
+            timestamp: Date.now() + 100,
+          };
+          
+          setMessages(prev => [...prev, referralMessage]);
+          
+          // Only show value add menu if it's not a value-add service already
+          if (!formData.serviceRequested) {
+            setTimeout(() => {
+              setShowValueAddMenu(true);
+            }, 1500);
+          } else {
+            // For value-add services, suggest other options
+            setTimeout(() => {
+              setButtonOptions(["Learn About Other Services", "Refer a Friend", "I'm All Set"]);
+            }, 500);
+          }
+        }, 2000);
       }, 1000);
       
     } catch (error) {

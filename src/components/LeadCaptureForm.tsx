@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -188,6 +188,23 @@ const LeadCaptureForm = ({ onSubmit, dealType, serviceType }: LeadCaptureFormPro
                 </SelectContent>
               </Select>
             </div>
+            <div>
+              <Label htmlFor="timeframe">⏱️ Investment Timeframe</Label>
+              <Select 
+                onValueChange={(value) => handleSelectChange("timeframe", value)}
+                defaultValue={formData.timeframe}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select timeframe" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Immediate">Ready to buy immediately</SelectItem>
+                  <SelectItem value="1-3 Months">1-3 months</SelectItem>
+                  <SelectItem value="3-6 Months">3-6 months</SelectItem>
+                  <SelectItem value="6+ Months">6+ months</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </>
         );
         
@@ -214,6 +231,25 @@ const LeadCaptureForm = ({ onSubmit, dealType, serviceType }: LeadCaptureFormPro
                 onChange={handleChange}
                 placeholder="e.g., $250,000"
               />
+            </div>
+            
+            <div>
+              <Label htmlFor="dealType">🏠 Deal Type</Label>
+              <Select 
+                onValueChange={(value) => handleSelectChange("dealType", value)}
+                defaultValue={formData.dealType}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select deal type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Fix & Flip">Fix & Flip</SelectItem>
+                  <SelectItem value="Rental Property">Rental Property</SelectItem>
+                  <SelectItem value="Commercial">Commercial</SelectItem>
+                  <SelectItem value="New Construction">New Construction</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             
             <div>

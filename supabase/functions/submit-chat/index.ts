@@ -91,6 +91,10 @@ const fundingInfo = {
     maxAmount: "No cap on the loan amount if the numbers make sense. Real Invest Funding LLC has funding solutions from $30,000 up to the FHA Cap in the county.",
     rates: "Current rates start at 7.5% annualized interest with an origination fee from 0-5%, and no prepayment penalties.",
     term: "6 Months to 2 Years for a fix & flip. 30 Years for a buy & hold or refinance. One loan approved per applicant until proven track record"
+  },
+  referralProgram: {
+    description: "Earn $500+ for each successful referral that results in funding. Submit your leads via our contact page or email.",
+    contact: "aattoh@realinvestfunding.com"
   }
 };
 
@@ -125,64 +129,81 @@ const handler = async (req: Request): Promise<Response> => {
     // For now, we're just logging and returning intelligent responses
     
     // Create comprehensive context-aware responses based on message content
-    let response = "Thanks for your message! Our team will get back to you shortly. What specific type of property are you interested in financing?";
+    let response = "Thanks for your message! To get started, what kind of real estate investment are you interested in funding?";
     
-    // Check for specific types of properties or loans
-    if (message.toLowerCase().includes("single family")) {
-      response = "Single-family homes are a great investment! We offer fix & flip loans with up to 100% financing for purchase and rehab. What's your timeline for this project?";
-    } else if (message.toLowerCase().includes("multi-family")) {
-      response = "Multi-family properties can provide excellent returns! Our rental property loans feature 30-year terms with cash-flow focused underwriting. How many units are you looking at?";
-    } else if (message.toLowerCase().includes("commercial")) {
-      response = "For commercial properties, we offer financing up to 75% LTV with flexible terms for value-add projects. What type of commercial property are you interested in?";
-    } else if (message.toLowerCase().includes("land")) {
-      response = "Land development can be very profitable. We provide ground-up construction financing for qualified investors with competitive terms. Do you already own the land or are you looking to purchase?";
+    // Define response patterns for different conversation scenarios
+    
+    // Initial flow - welcome and options
+    if (conversation.length <= 1) {
+      response = "Welcome to Real Invest Funding LLC! 💰 Ready to fund your next real estate deal with up to 100% financing? I'll guide you through our quick process — just a few questions, and we'll send you info or a term sheet. Ready to get started?";
     }
     
-    // Check for questions about rates and financing options
-    else if (message.toLowerCase().includes("rate") || message.toLowerCase().includes("interest")) {
-      response = `Our rates start at 7.5% annualized interest with an origination fee from 0-5%, and no prepayment penalties. Rates are based on credit score but credit score does NOT determine loan approval. Would you like us to send you our current rate sheet?`;
-    } else if (message.toLowerCase().includes("down payment") || message.toLowerCase().includes("qualify")) {
-      response = "We can finance up to 100% of the purchase and renovation costs for the right deals! Our qualification process focuses more on the property's potential than traditional borrower metrics. What's your investment experience?";
+    // Initial flow options
+    else if (message.toLowerCase().includes("tell me more")) {
+      response = "Great! To get started, what kind of funding do you need right now?";
+    }
+    else if (message.toLowerCase().includes("browse options")) {
+      response = "Here are the services we offer at Real Invest Funding LLC:\n\n" +
+        "💵 Private Money Lending - Up to 100% financing for real estate deals\n" +
+        "📄 CDNA Reports - Comprehensive property valuation for $34.97\n" +
+        "🏛️ DSR Reports - Debt and lien reports to help with negotiations\n" +
+        "🧾 Proof of Funds - Letters for $19.97 to strengthen your offers\n" +
+        "🏠 Off-Market Leads - AI-curated investment opportunities\n\n" +
+        "What kind of funding are you interested in?";
     }
     
-    // Check for specific loan types
-    else if (message.toLowerCase().includes("fix & flip") || message.toLowerCase().includes("flip")) {
-      response = "Our fix & flip loans are designed for short-term projects with terms up to 24 months. We can fund up to 100% of purchase and rehab costs for the right deals. What's the purchase price and estimated renovation budget for your project?";
-    } else if (message.toLowerCase().includes("rental property") || message.toLowerCase().includes("buy and hold")) {
-      response = "Our rental property loans offer 30-year terms with cash-flow focused underwriting. We look at the property's income potential rather than just your personal finances. What's the expected monthly rent for the property you're considering?";
-    } else if (message.toLowerCase().includes("new construction")) {
-      response = "We provide ground-up construction financing with competitive terms. We can fund up to 80% of total project costs including land acquisition. Do you have architectural plans and permits in place?";
-    } else if (message.toLowerCase().includes("bridge loan")) {
-      response = "Our bridge loans provide short-term financing for acquisitions and refinances with flexible terms. They're perfect for when you need capital quickly before securing long-term financing. What's your exit strategy for the bridge loan?";
+    // Deal type selection flow
+    else if (message.toLowerCase().includes("fix & flip") || message.toLowerCase().includes("fix and flip")) {
+      response = "Awesome — we love fix and flips. 🛠️ We can offer up to 100% financing if the numbers make sense. No credit minimums required. We fund \"as-is\" and fast.\n\nWould you like to:";
+    }
+    else if (message.toLowerCase().includes("rental property") || message.toLowerCase().includes("buy and hold")) {
+      response = "Smart choice! Our rental loans feature 30-year terms with cash-flow focused underwriting. We care more about the property's income potential than your personal finances.\n\nWould you like to:";
+    }
+    else if (message.toLowerCase().includes("commercial")) {
+      response = "We offer commercial financing for qualified investors! Our terms are competitive with up to 75% LTV and flexible options for various commercial property types.\n\nWould you like to:";
+    }
+    else if (message.toLowerCase().includes("construction") || message.toLowerCase().includes("ground-up")) {
+      response = "Ground-up construction requires careful planning. We provide financing for qualified investors with competitive terms and can fund up to 80% of total project costs including land acquisition.\n\nWould you like to:";
+    }
+    else if (message.toLowerCase().includes("proof of funds") || message.toLowerCase().includes("pof")) {
+      response = "Our Proof of Funds letters cost just $19.97 and are available nationwide (except AZ, MN, NV, OR, SD, UT, VT). These letters give you credibility when making offers.\n\nTo proceed, we'll need:\n- Business/Entity Name (funding not available for individuals)\n- Investment Property Address\n- Expected Loan Amount";
+    }
+    else if (message.toLowerCase().includes("not sure")) {
+      response = "No problem! Let me help you figure out what might work best for your situation. What type of real estate investment are you considering?";
     }
     
-    // Check for queries about specific services
-    else if (message.toLowerCase().includes("cdna") || message.toLowerCase().includes("collateral dna") || message.toLowerCase().includes("valuation")) {
-      response = `Our CDNA Reports (Collateral DNA Reports) provide comprehensive property valuations at just $34.97. It's nearly as detailed as a professional appraisal but at a fraction of the cost. This service covers approximately 95% of all residential investment properties nationwide. Would you like to order a CDNA Report for a specific property?`;
-    } else if (message.toLowerCase().includes("dsr") || message.toLowerCase().includes("debt stack")) {
-      response = `Our DSR Reports (Debt Stack Reports) reveal essential details about property debts, including primary mortgage holders, outstanding balances, secondary mortgages, tax liens, and other liens. This information is crucial for due diligence before making an offer. Would you like to order a DSR Report for a specific property?`;
-    } else if (message.toLowerCase().includes("proof of funds") || message.toLowerCase().includes("pof")) {
-      response = `Our Proof of Funds letters are available nationwide for just $19.97 (except in AZ, MN, NV, OR, SD, UT, and VT). These letters are often required by real estate agents before submitting offers to sellers. To get one, we'll need your business name (funding not available for individuals), property address, and expected loan amount. Would you like to order a Proof of Funds letter?`;
-    } else if (message.toLowerCase().includes("leads") || message.toLowerCase().includes("off-market")) {
-      response = `Our Off-Market Property Leads service uses advanced AI to find exclusive opportunities with absentee owners, high equity, and potential distress signals. These off-market properties often come with reduced investor competition. We offer both per-lead pricing and subscription plans. What areas are you interested in finding leads for?`;
+    // Secondary options flow
+    else if (message.toLowerCase().includes("loan terms") || message.toLowerCase().includes("see terms")) {
+      response = "Here are our current loan terms:\n\n" +
+        "• Loan amounts from $30,000 up to the FHA county limit\n" +
+        "• Interest rates starting at 7.5% (annualized)\n" +
+        "• Origination fees: 0-5%\n" +
+        "• No prepayment penalties\n" +
+        "• Fix & Flip terms: 6-24 months\n" +
+        "• Buy & Hold terms: up to 30 years\n\n" +
+        "Ready to get started with an application?";
+    }
+    else if (message.toLowerCase().includes("start application")) {
+      response = "Great! Let's get your information so we can prepare your funding options. Please fill out the form below:";
+    }
+    else if (message.toLowerCase().includes("cdna reports")) {
+      response = "Our CDNA (Comprehensive Digital Neighborhood Analysis) Reports provide in-depth property valuations for just $34.97. These reports include neighborhood trends, historical price data, and comprehensive comparables to help you make informed investment decisions.\n\nWould you like to order a CDNA Report?";
+    }
+    else if (message.toLowerCase().includes("dsr reports")) {
+      response = "Our DSR (Debt Stack Report) reveals crucial financial information about properties including the primary mortgage holder, outstanding balances, secondary mortgages, tax liens, and other encumbrances. This gives you powerful negotiation leverage.\n\nWould you like to order a DSR Report?";
+    }
+    else if (message.toLowerCase().includes("off-market leads") || message.toLowerCase().includes("leads")) {
+      response = "Our Off-Market Leads service uses AI technology to identify high-equity properties with motivated sellers before they hit the market. This gives you a competitive edge with less competition and better potential deals.\n\nWould you like to learn more about our leads service?";
     }
     
-    // General information about the company or services
-    else if (message.toLowerCase().includes("about") || message.toLowerCase().includes("company")) {
-      response = companyInfo.about + " " + companyInfo.mission;
-    } else if (message.toLowerCase().includes("services") || message.toLowerCase().includes("what do you offer")) {
-      response = companyInfo.services + " Would you like to hear more about any specific service we offer?";
-    } else if (message.toLowerCase().includes("process") || message.toLowerCase().includes("how does it work")) {
-      response = fundingInfo.process + " " + fundingInfo.steps.join(" ");
-    } else if (message.toLowerCase().includes("why private money") || message.toLowerCase().includes("why use you")) {
-      response = fundingInfo.privateMoney.reasons.join(" ");
-    } else if (message.toLowerCase().includes("loan terms") || message.toLowerCase().includes("financing options")) {
-      response = `${fundingInfo.loanTerms.maxAmount} ${fundingInfo.loanTerms.rates} ${fundingInfo.loanTerms.term}`;
+    // Speaking with a specialist or human
+    else if (message.toLowerCase().includes("speak") || message.toLowerCase().includes("human") || message.toLowerCase().includes("connect me") || message.toLowerCase().includes("agent")) {
+      response = "I'd be happy to connect you with a funding specialist! Please fill out the form below with your contact information, and someone will reach out to you within 24 business hours.";
     }
     
-    // Contact requests
-    else if (message.toLowerCase().includes("contact") || message.toLowerCase().includes("talk to someone") || message.toLowerCase().includes("connect me")) {
-      response = "I'd be happy to connect you with our team! Please provide your name, email, and phone number, and someone from Real Invest Funding will reach out to you within 24 business hours.";
+    // Fallback - guide them to appropriate options
+    else {
+      response = "I can help with funding for fix & flip projects, rental properties, commercial investments, ground-up construction, or provide value-added services like CDNA Reports, Proof of Funds letters, and Off-Market Leads. What would you like to learn more about?";
     }
     
     return new Response(

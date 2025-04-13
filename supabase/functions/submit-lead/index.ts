@@ -20,6 +20,9 @@ interface LeadFormData {
   targetLocation?: string;
   timeframe?: string;
   serviceRequested?: string;
+  referralName?: string;
+  referralEmail?: string;
+  referralPhone?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -35,6 +38,8 @@ const handler = async (req: Request): Promise<Response> => {
     let emailSubject = "New Lead from Real Invest Funding Website";
     if (formData.serviceRequested) {
       emailSubject = `New ${formData.serviceRequested} Request from Real Invest Funding Website`;
+    } else if (formData.dealType) {
+      emailSubject = `New ${formData.dealType} Funding Request from Real Invest Funding Website`;
     }
     
     // Create appropriate email content based on service type
@@ -43,16 +48,19 @@ const handler = async (req: Request): Promise<Response> => {
       switch(formData.serviceRequested) {
         case "CDNA":
           serviceSpecificContent = `
+Service Requested: CDNA Report
 Property Address for CDNA Report: ${formData.propertyAddress || "Not provided"}
           `;
           break;
         case "DSR":
           serviceSpecificContent = `
+Service Requested: Debt Stack Report
 Property Address for DSR Report: ${formData.propertyAddress || "Not provided"}
           `;
           break;
         case "ProofOfFunds":
           serviceSpecificContent = `
+Service Requested: Proof of Funds Letter
 Business/Entity Name: ${formData.businessName || "Not provided"}
 Investment Property Address: ${formData.propertyAddress || "Not provided"}
 Expected Loan Amount: ${formData.loanAmount || "Not provided"}
@@ -60,17 +68,41 @@ Expected Loan Amount: ${formData.loanAmount || "Not provided"}
           break;
         case "Leads":
           serviceSpecificContent = `
+Service Requested: Off-Market Property Leads
 Target Location: ${formData.targetLocation || "Not provided"}
 Property Type Preference: ${formData.propertyType || "Not provided"}
+Timeframe: ${formData.timeframe || "Not provided"}
           `;
           break;
         default:
+          serviceSpecificContent = `
+Service Requested: ${formData.serviceRequested}
+          `;
           if (formData.investmentGoals) {
-            serviceSpecificContent = `
+            serviceSpecificContent += `
 Investment Goals: ${formData.investmentGoals}
             `;
           }
       }
+    } else if (formData.dealType) {
+      // For loan/funding requests
+      serviceSpecificContent = `
+Deal Type: ${formData.dealType}
+Property Address: ${formData.propertyAddress || "Not provided"}
+Loan Amount: ${formData.loanAmount || "Not provided"}
+${formData.investmentGoals ? `Investment Goals: ${formData.investmentGoals}` : ""}
+      `;
+    }
+    
+    // Include referral information if provided
+    let referralContent = "";
+    if (formData.referralName || formData.referralEmail || formData.referralPhone) {
+      referralContent = `
+Referral Information:
+Name: ${formData.referralName || "Not provided"}
+Email: ${formData.referralEmail || "Not provided"}
+Phone: ${formData.referralPhone || "Not provided"}
+      `;
     }
     
     // Send the email
@@ -81,10 +113,7 @@ Investment Goals: ${formData.investmentGoals}
       Email: ${formData.email}
       Phone: ${formData.phone}
       ${serviceSpecificContent}
-      Property Address: ${formData.propertyAddress || "Not provided"}
-      Loan Amount: ${formData.loanAmount || "Not provided"}
-      Deal Type: ${formData.dealType || "Not specified"}
-      Service Requested: ${formData.serviceRequested || "None specified"}
+      ${referralContent}
     `;
     
     // Log the form data that would be sent via email
