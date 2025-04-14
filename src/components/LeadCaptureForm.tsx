@@ -70,7 +70,7 @@ const LeadCaptureForm = ({ onSubmit, dealType, serviceType }: LeadCaptureFormPro
       console.error("Error submitting form:", error);
       toast({
         title: "Submission Error",
-        description: "There was a problem submitting your application. Please try again.",
+        description: "There was a problem submitting your application. Please try again or email directly to aattoh@realinvestfunding.com.",
         variant: "destructive",
         duration: 5000,
       });
@@ -279,7 +279,7 @@ const LeadCaptureForm = ({ onSubmit, dealType, serviceType }: LeadCaptureFormPro
             <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
             <h3 className="text-xl font-bold text-center">Application Received!</h3>
             <p className="text-center mt-2 text-gray-600">
-              We've received your info and will reach out within 24 business hours with more details.
+              We've received your info and will reach out within 24 business hours with more details. Your submission has been sent to aattoh@realinvestfunding.com.
             </p>
           </div>
         ) : (
@@ -331,7 +331,7 @@ const LeadCaptureForm = ({ onSubmit, dealType, serviceType }: LeadCaptureFormPro
                   Submitting
                 </>
               ) : (
-                "Submit Application"
+                `Submit Application (to aattoh@realinvestfunding.com)`
               )}
             </Button>
           </form>

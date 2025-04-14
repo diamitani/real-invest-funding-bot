@@ -125,7 +125,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Chat submission received, sending to aattoh@realinvestfunding.com");
     console.log(emailContent);
     
-    // In a real implementation, we would connect to an email service here
+    // In a real implementation, we would connect to an email service here to send to aattoh@realinvestfunding.com
     // For now, we're just logging and returning intelligent responses
     
     // Create comprehensive context-aware responses based on message content
@@ -166,7 +166,7 @@ const handler = async (req: Request): Promise<Response> => {
       response = "Ground-up construction requires careful planning. We provide financing for qualified investors with competitive terms and can fund up to 80% of total project costs including land acquisition.\n\nWould you like to:";
     }
     else if (message.toLowerCase().includes("proof of funds") || message.toLowerCase().includes("pof")) {
-      response = "Our Proof of Funds letters cost just $19.97 and are available nationwide (except AZ, MN, NV, OR, SD, UT, VT). These letters give you credibility when making offers.\n\nTo proceed, we'll need:\n- Business/Entity Name (funding not available for individuals)\n- Investment Property Address\n- Expected Loan Amount";
+      response = "Our Proof of Funds letters cost just $19.97 and are available nationwide (except AZ, MN, NV, OR, SD, UT, VT). These letters give you credibility when making offers.\n\nTo proceed, we'll need:\n- Business/Entity Name (funding not available for individuals)\n- Investment Property Address\n- Expected Loan Amount\n\nEmail these details to aattoh@realinvestfunding.com or fill out our application form.";
     }
     else if (message.toLowerCase().includes("not sure")) {
       response = "No problem! Let me help you figure out what might work best for your situation. What type of real estate investment are you considering?";
@@ -181,29 +181,29 @@ const handler = async (req: Request): Promise<Response> => {
         "• No prepayment penalties\n" +
         "• Fix & Flip terms: 6-24 months\n" +
         "• Buy & Hold terms: up to 30 years\n\n" +
-        "Ready to get started with an application?";
+        "Ready to get started with an application? All applications are sent to aattoh@realinvestfunding.com for review.";
     }
     else if (message.toLowerCase().includes("start application")) {
-      response = "Great! Let's get your information so we can prepare your funding options. Please fill out the form below:";
+      response = "Great! Let's get your information so we can prepare your funding options. Please fill out the form below. Your application will be sent directly to aattoh@realinvestfunding.com:";
     }
     else if (message.toLowerCase().includes("cdna reports")) {
-      response = "Our CDNA (Comprehensive Digital Neighborhood Analysis) Reports provide in-depth property valuations for just $34.97. These reports include neighborhood trends, historical price data, and comprehensive comparables to help you make informed investment decisions.\n\nWould you like to order a CDNA Report?";
+      response = "Our CDNA (Comprehensive Digital Neighborhood Analysis) Reports provide in-depth property valuations for just $34.97. These reports include neighborhood trends, historical price data, and comprehensive comparables to help you make informed investment decisions.\n\nTo order, please provide the property address to aattoh@realinvestfunding.com or fill out our form.";
     }
     else if (message.toLowerCase().includes("dsr reports")) {
-      response = "Our DSR (Debt Stack Report) reveals crucial financial information about properties including the primary mortgage holder, outstanding balances, secondary mortgages, tax liens, and other encumbrances. This gives you powerful negotiation leverage.\n\nWould you like to order a DSR Report?";
+      response = "Our DSR (Debt Stack Report) reveals crucial financial information about properties including the primary mortgage holder, outstanding balances, secondary mortgages, tax liens, and other encumbrances. This gives you powerful negotiation leverage.\n\nTo order, please provide the property address to aattoh@realinvestfunding.com or fill out our form.";
     }
     else if (message.toLowerCase().includes("off-market leads") || message.toLowerCase().includes("leads")) {
-      response = "Our Off-Market Leads service uses AI technology to identify high-equity properties with motivated sellers before they hit the market. This gives you a competitive edge with less competition and better potential deals.\n\nWould you like to learn more about our leads service?";
+      response = "Our Off-Market Leads service uses AI technology to identify high-equity properties with motivated sellers before they hit the market. This gives you a competitive edge with less competition and better potential deals.\n\nTo learn more or order leads, contact aattoh@realinvestfunding.com with your target location and property preferences.";
     }
     
     // Speaking with a specialist or human
     else if (message.toLowerCase().includes("speak") || message.toLowerCase().includes("human") || message.toLowerCase().includes("connect me") || message.toLowerCase().includes("agent")) {
-      response = "I'd be happy to connect you with a funding specialist! Please fill out the form below with your contact information, and someone will reach out to you within 24 business hours.";
+      response = "I'd be happy to connect you with a funding specialist! Please fill out the form below with your contact information, and someone will reach out to you within 24 business hours. All inquiries are sent to aattoh@realinvestfunding.com.";
     }
     
     // Fallback - guide them to appropriate options
     else {
-      response = "I can help with funding for fix & flip projects, rental properties, commercial investments, ground-up construction, or provide value-added services like CDNA Reports, Proof of Funds letters, and Off-Market Leads. What would you like to learn more about?";
+      response = "I can help with funding for fix & flip projects, rental properties, commercial investments, ground-up construction, or provide value-added services like CDNA Reports, Proof of Funds letters, and Off-Market Leads. What would you like to learn more about?\n\nYou can also email aattoh@realinvestfunding.com directly with any specific questions.";
     }
     
     return new Response(
@@ -224,7 +224,7 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(
       JSON.stringify({ 
         success: false, 
-        error: "There was an error processing your message. Please try again." 
+        error: "There was an error processing your message. Please try again or email us directly at aattoh@realinvestfunding.com." 
       }),
       {
         status: 500,

@@ -95,7 +95,7 @@ export const useChatHandlers = ({
           newButtons = ["See Loan Terms", "Start Application", "Learn More"];
         }
         else if (message === "Proof of Funds") {
-          botResponse = "Our Proof of Funds letters cost just $19.97 and are available nationwide (except AZ, MN, NV, OR, SD, UT, VT). These letters give you credibility when making offers.\n\nTo proceed, we'll need:\n- Business/Entity Name (funding not available for individuals)\n- Investment Property Address\n- Expected Loan Amount";
+          botResponse = "Our Proof of Funds letters cost just $19.97 and are available nationwide (except AZ, MN, NV, OR, SD, UT, VT). These letters give you credibility when making offers.\n\nTo proceed, we'll need:\n- Business/Entity Name (funding not available for individuals)\n- Investment Property Address\n- Expected Loan Amount\n\nAll requests will be sent to aattoh@realinvestfunding.com for processing.";
           newButtons = ["Start Application", "Learn More", "See Other Services"];
           setSelectedValueAddService("ProofOfFunds");
         }
@@ -113,11 +113,11 @@ export const useChatHandlers = ({
             "• No prepayment penalties\n" +
             "• Fix & Flip terms: 6-24 months\n" +
             "• Buy & Hold terms: up to 30 years\n\n" +
-            "Ready to get started with an application?";
+            "Ready to get started with an application? All applications are sent to aattoh@realinvestfunding.com for processing.";
           newButtons = ["Start Application", "Ask a Question", "Not Right Now"];
         }
         else if (message === "Start Application" || message === "Learn About CDNA Reports" || message === "Learn About DSR Reports") {
-          botResponse = "Great! Let's get your information so we can prepare your funding options. Please fill out the form below:";
+          botResponse = "Great! Let's get your information so we can prepare your funding options. Please fill out the form below. Your application will be sent to aattoh@realinvestfunding.com:";
           newButtons = [];
           
           // Select appropriate service based on previous selection
@@ -136,33 +136,33 @@ export const useChatHandlers = ({
             "• DSR Reports: Details on property debts and liens\n" +
             "• Proof of Funds ($19.97): Letters to strengthen your offers\n" +
             "• Off-Market Leads: AI-curated investment opportunities\n\n" +
-            "Which service would you like to learn more about?";
+            "Which service would you like to learn more about? All inquiries are handled by aattoh@realinvestfunding.com.";
           newButtons = ["CDNA Reports", "DSR Reports", "Proof of Funds", "Off-Market Leads", "Back to Funding"];
         }
         else if (message === "Speak With a Specialist" || message === "connect me" || message.toLowerCase().includes("speak") || message.toLowerCase().includes("human") || message.toLowerCase().includes("agent")) {
-          botResponse = "I'd be happy to connect you with a funding specialist! Please fill out the form below, and someone will reach out to you within 24 business hours.";
+          botResponse = "I'd be happy to connect you with a funding specialist! Please fill out the form below, and someone will reach out to you within 24 business hours. Your information will be sent to aattoh@realinvestfunding.com.";
           newButtons = [];
           setShowLeadForm(true);
         }
 
         // Value-add services flow
         else if (message === "CDNA Reports") {
-          botResponse = "Our CDNA (Comprehensive Digital Neighborhood Analysis) Reports provide in-depth property valuations for just $34.97. These reports include neighborhood trends, historical price data, and comprehensive comparables to help you make informed investment decisions.\n\nWould you like to order a CDNA Report?";
+          botResponse = "Our CDNA (Comprehensive Digital Neighborhood Analysis) Reports provide in-depth property valuations for just $34.97. These reports include neighborhood trends, historical price data, and comprehensive comparables to help you make informed investment decisions.\n\nWould you like to order a CDNA Report? Orders are processed by aattoh@realinvestfunding.com.";
           newButtons = ["Yes, Order CDNA", "No Thanks"];
           setSelectedValueAddService("CDNA");
         }
         else if (message === "DSR Reports") {
-          botResponse = "Our DSR (Debt Stack Report) reveals crucial financial information about properties including the primary mortgage holder, outstanding balances, secondary mortgages, tax liens, and other encumbrances. This gives you powerful negotiation leverage.\n\nWould you like to order a DSR Report?";
+          botResponse = "Our DSR (Debt Stack Report) reveals crucial financial information about properties including the primary mortgage holder, outstanding balances, secondary mortgages, tax liens, and other encumbrances. This gives you powerful negotiation leverage.\n\nWould you like to order a DSR Report? Orders are processed by aattoh@realinvestfunding.com.";
           newButtons = ["Yes, Order DSR", "No Thanks"];
           setSelectedValueAddService("DSR");
         }
         else if (message === "Off-Market Leads") {
-          botResponse = "Our Off-Market Leads service uses AI technology to identify high-equity properties with motivated sellers before they hit the market. This gives you a competitive edge with less competition and better potential deals.\n\nWould you like to learn more about our leads service?";
+          botResponse = "Our Off-Market Leads service uses AI technology to identify high-equity properties with motivated sellers before they hit the market. This gives you a competitive edge with less competition and better potential deals.\n\nWould you like to learn more about our leads service? Inquiries are handled by aattoh@realinvestfunding.com.";
           newButtons = ["Yes, Get Leads Info", "No Thanks"];
           setSelectedValueAddService("Leads");
         }
         else if (message === "Yes, Order CDNA" || message === "Yes, Order DSR" || message === "Yes, Get Leads Info") {
-          botResponse = "Great choice! To proceed with your order, please fill out the form below:";
+          botResponse = "Great choice! To proceed with your order, please fill out the form below. Your order will be sent to aattoh@realinvestfunding.com:";
           newButtons = [];
           setShowLeadForm(true);
         }
@@ -234,7 +234,7 @@ export const useChatHandlers = ({
               thankYouMessage = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
-                content: `Thanks ${formData.fullName}! We've received your CDNA Report request for ${formData.propertyAddress || "your property"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps.`,
+                content: `Thanks ${formData.fullName}! We've received your CDNA Report request for ${formData.propertyAddress || "your property"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps. Your request has been forwarded to aattoh@realinvestfunding.com.`,
                 timestamp: Date.now(),
               };
               break;
@@ -242,7 +242,7 @@ export const useChatHandlers = ({
               thankYouMessage = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
-                content: `Thanks ${formData.fullName}! We've received your DSR Report request for ${formData.propertyAddress || "your property"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps.`,
+                content: `Thanks ${formData.fullName}! We've received your DSR Report request for ${formData.propertyAddress || "your property"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps. Your request has been forwarded to aattoh@realinvestfunding.com.`,
                 timestamp: Date.now(),
               };
               break;
@@ -250,7 +250,7 @@ export const useChatHandlers = ({
               thankYouMessage = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
-                content: `Thanks ${formData.fullName}! We've received your Proof of Funds request for ${formData.businessName || "your business"} regarding ${formData.propertyAddress || "your property"} with an expected loan amount of ${formData.loanAmount || "$0"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps.`,
+                content: `Thanks ${formData.fullName}! We've received your Proof of Funds request for ${formData.businessName || "your business"} regarding ${formData.propertyAddress || "your property"} with an expected loan amount of ${formData.loanAmount || "$0"}. Our team will reach out to you at ${formData.email} within 24 business hours with payment instructions and next steps. Your request has been forwarded to aattoh@realinvestfunding.com.`,
                 timestamp: Date.now(),
               };
               break;
@@ -258,7 +258,7 @@ export const useChatHandlers = ({
               thankYouMessage = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
-                content: `Thanks ${formData.fullName}! We've received your Off-Market Leads request for ${formData.targetLocation || "your target location"}. Our team will reach out to you at ${formData.email} within 24 business hours to discuss available lead options in your area.`,
+                content: `Thanks ${formData.fullName}! We've received your Off-Market Leads request for ${formData.targetLocation || "your target location"}. Our team will reach out to you at ${formData.email} within 24 business hours to discuss available lead options in your area. Your request has been forwarded to aattoh@realinvestfunding.com.`,
                 timestamp: Date.now(),
               };
               break;
@@ -266,7 +266,7 @@ export const useChatHandlers = ({
               thankYouMessage = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
-                content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your request for ${formData.serviceRequested}.`,
+                content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your request for ${formData.serviceRequested}. Your information has been sent to aattoh@realinvestfunding.com.`,
                 timestamp: Date.now(),
               };
           }
@@ -275,7 +275,7 @@ export const useChatHandlers = ({
           thankYouMessage = {
             id: (Date.now() + 1).toString(),
             role: 'assistant',
-            content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your ${formData.loanAmount || ""} loan request for ${formData.propertyAddress || "your property"}. Would you like to learn about our value-added services that can help strengthen your real estate deals?`,
+            content: `Thanks ${formData.fullName}! Our team will reach out to you shortly about your ${formData.loanAmount || ""} loan request for ${formData.propertyAddress || "your property"}. Your application has been sent to aattoh@realinvestfunding.com. Would you like to learn about our value-added services that can help strengthen your real estate deals?`,
             timestamp: Date.now(),
           };
         }
@@ -289,7 +289,7 @@ export const useChatHandlers = ({
           const referralMessage: Message = {
             id: (Date.now() + 2).toString(),
             role: 'assistant',
-            content: "✅ We've received your info and will reach out within 24 business hours with your term sheet or details. Keep an eye on your inbox!\n\nWant to refer a friend and earn a bonus? 💸 Just let us know and we can tell you about our referral program!",
+            content: "✅ We've received your info and will reach out within 24 business hours with your term sheet or details. Keep an eye on your inbox!\n\nWant to refer a friend and earn a bonus? 💸 Just let us know and we can tell you about our referral program! Contact aattoh@realinvestfunding.com with referral details.",
             timestamp: Date.now() + 100,
           };
           

@@ -120,6 +120,9 @@ Phone: ${formData.referralPhone || "Not provided"}
     console.log("Form submission received:", emailContent);
     console.log(`Email would be sent to: aattoh@realinvestfunding.com with subject: ${emailSubject}`);
     
+    // In production, we would add code here to send the email to aattoh@realinvestfunding.com
+    // This would typically use an email service like SendGrid, AWS SES, or similar
+    
     return new Response(
       JSON.stringify({ 
         success: true, 
